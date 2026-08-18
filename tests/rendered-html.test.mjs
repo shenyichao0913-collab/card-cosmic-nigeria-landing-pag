@@ -41,7 +41,7 @@ test("server-renders the Card Cosmic conversion page", async () => {
   assert.match(html, /id="download"/);
   assert.match(html, /beautystar_entertainment/);
   assert.match(html, /reliable and stable gift card vendor/i);
-  assert.match(html, /Official Card Cosmic app/i);
+  assert.match(html, /Real user transaction/i);
   assert.doesNotMatch(html, /codex-preview|SkeletonPreview|react-loading-skeleton/i);
 });
 

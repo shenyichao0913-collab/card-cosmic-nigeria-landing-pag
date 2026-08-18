@@ -11,10 +11,10 @@ const GOOGLE_PLAY_URL =
   "https://play.google.com/store/apps/details?id=app.com.cardlaxy&pli=1";
 
 const screenshots = [
-  { src: "/assets/app-home.png", label: "Home", detail: "Rates at a glance" },
-  { src: "/assets/app-trade.png", label: "Trade", detail: "Choose your gift card" },
-  { src: "/assets/app-secure.png", label: "Track", detail: "Order status updates" },
-  { src: "/assets/app-withdraw.png", label: "Cash out", detail: "Simple withdrawals" },
+  { src: "/assets/app-home.png", label: "Home", detail: "Rates and balance" },
+  { src: "/assets/app-trade.png", label: "Trade", detail: "Transaction history" },
+  { src: "/assets/app-secure.png", label: "Track", detail: "Order details" },
+  { src: "/assets/app-withdraw.png", label: "Cash out", detail: "Completed withdrawal" },
 ];
 
 const faqs = [
@@ -317,12 +317,13 @@ export default function Home() {
       <section className="section showcase-section" id="app">
         <div className="shell showcase-grid">
           <div className="showcase-copy">
-            <span className="kicker light-kicker">The real Card Cosmic app</span>
-            <h2>Know what to expect before you download</h2>
+            <span className="kicker light-kicker">Real user activity</span>
+            <h2>Real trades. Real outcomes.</h2>
             <p>
-              Explore official Card Cosmic app screens for trading, order
-              tracking and withdrawals. No recreated interface or invented
-              transaction data is used here.
+              Explore privacy-protected screenshots from real Card Cosmic user
+              transactions, including trading, order tracking and completed
+              cash-outs. Personal details and card codes have been blurred for
+              safety.
             </p>
 
             <div className="shot-tabs" role="tablist" aria-label="App screens">
@@ -349,9 +350,9 @@ export default function Home() {
             <div className="phone-glow" />
             <img
               src={screenshots[activeShot].src}
-              alt={`Official Card Cosmic ${screenshots[activeShot].label} app screen`}
+              alt={`Privacy-protected real Card Cosmic user ${screenshots[activeShot].label} transaction screen`}
             />
-            <span className="official-tag">Official app screen</span>
+            <span className="official-tag">Real user transaction</span>
           </div>
         </div>
       </section>
