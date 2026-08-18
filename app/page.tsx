@@ -211,17 +211,17 @@ export default function Home() {
               <h2>More value. Less waiting.</h2>
             </div>
             <p>
-              A focused gift-card trading experience designed around clear
-              rates, quick payouts and reliable help when you need it.
+              Clear rates, fast payouts, secure trading and reliable support—all
+              in one focused experience.
             </p>
           </div>
 
           <div className="benefit-grid">
             {[
-              ["01", "Competitive rates", "Trade popular gift cards with competitive market rates."],
-              ["02", "Fast withdrawal", "Receive payment quickly after a successful trade."],
-              ["03", "Secure trading", "Follow each order through a secure, reliable platform."],
-              ["04", "Professional support", "Get help resolving transaction and account issues."],
+              ["01", "Competitive rates", "Better value for popular gift cards."],
+              ["02", "Fast withdrawal", "Quick payouts after successful trades."],
+              ["03", "Secure trading", "Track every order from start to finish."],
+              ["04", "Professional support", "Reliable help whenever you need it."],
             ].map(([number, title, copy]) => (
               <article className="benefit-card" key={title}>
                 <span>{number}</span>
