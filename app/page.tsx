@@ -1,9 +1,12 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import type { MouseEvent } from "react";
 
 const APP_STORE_URL =
-  "https://apps.apple.com/app/id6756063147";
+  "https://apps.apple.com/ng/app/cardcosmic/id6756063147";
+const APP_STORE_IOS_URL =
+  "itms-apps://itunes.apple.com/app/id6756063147";
 const GOOGLE_PLAY_URL =
   "https://play.google.com/store/apps/details?id=app.com.cardlaxy&pli=1";
 
@@ -58,6 +61,20 @@ function track(metaEvent: string, gaEvent: string) {
   }
 }
 
+function openAppStore(event: MouseEvent<HTMLAnchorElement>) {
+  track("ClickAppStore", "download_click");
+
+  const isIOS =
+    /iPad|iPhone|iPod/i.test(window.navigator.userAgent) ||
+    (window.navigator.platform === "MacIntel" &&
+      window.navigator.maxTouchPoints > 1);
+
+  if (isIOS) {
+    event.preventDefault();
+    window.location.assign(APP_STORE_IOS_URL);
+  }
+}
+
 function StoreButtons({ className = "" }: { className?: string }) {
   return (
     <div className={`store-row ${className}`.trim()} aria-label="Download Card Cosmic">
@@ -65,7 +82,7 @@ function StoreButtons({ className = "" }: { className?: string }) {
         className="store-button"
         href={APP_STORE_URL}
         target="_self"
-        onClick={() => track("ClickAppStore", "download_click")}
+        onClick={openAppStore}
         aria-label="Download Card Cosmic on the App Store"
       >
         <img src="/assets/appstore.svg" alt="Download on the App Store" />

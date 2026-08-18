@@ -9,6 +9,9 @@ export const metadata: Metadata = {
     icon: "/favicon.svg",
     shortcut: "/favicon.svg",
   },
+  other: {
+    "apple-itunes-app": "app-id=6756063147",
+  },
 };
 
 export default function RootLayout({

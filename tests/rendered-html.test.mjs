@@ -34,7 +34,7 @@ test("server-renders the Card Cosmic conversion page", async () => {
   assert.match(html, /<title>[^<]*Card Cosmic[^<]*<\/title>/i);
   assert.match(html, /₦3,000/);
   assert.match(html, /555555/);
-  assert.match(html, /apps\.apple\.com\/app\/id6756063147/);
+  assert.match(html, /apps\.apple\.com\/ng\/app\/cardcosmic\/id6756063147/);
   assert.match(html, /target="_self"/);
   assert.match(html, /play\.google\.com\/store\/apps/);
   assert.match(html, /class="store-button"/);
@@ -55,8 +55,10 @@ test("removes the disposable starter preview surface", async () => {
   assert.match(page, /Register in 3 steps\. Get <span>₦3,000\.<\/span>/);
   assert.match(page, /beautystar-entertainment\.png/);
   assert.match(page, /CopyInviteCode/);
+  assert.match(page, /itms-apps:\/\/itunes\.apple\.com\/app\/id6756063147/);
   assert.match(layout, /en-NG/);
   assert.match(layout, /Invite Code 555555/);
+  assert.match(layout, /apple-itunes-app/);
   assert.doesNotMatch(packageJson, /react-loading-skeleton/);
   assert.deepEqual(
     await readdir(new URL("app/_sites-preview/", projectRoot)),
