@@ -34,8 +34,8 @@ test("server-renders the Card Cosmic conversion page", async () => {
   assert.match(html, /<title>[^<]*Card Cosmic[^<]*<\/title>/i);
   assert.match(html, /₦3,000/);
   assert.match(html, /555555/);
-  assert.match(html, /apps\.apple\.com\/ng\/app\/cardcosmic/);
-  assert.match(html, /target="_blank"/);
+  assert.match(html, /apps\.apple\.com\/app\/id6756063147/);
+  assert.match(html, /target="_self"/);
   assert.match(html, /play\.google\.com\/store\/apps/);
   assert.match(html, /class="store-button"/);
   assert.match(html, /id="download"/);

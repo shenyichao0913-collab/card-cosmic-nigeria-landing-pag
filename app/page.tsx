@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 
 const APP_STORE_URL =
-  "https://apps.apple.com/ng/app/cardcosmic/id6756063147?uo=4";
+  "https://apps.apple.com/app/id6756063147";
 const GOOGLE_PLAY_URL =
   "https://play.google.com/store/apps/details?id=app.com.cardlaxy&pli=1";
 
@@ -50,8 +50,12 @@ declare global {
 }
 
 function track(metaEvent: string, gaEvent: string) {
-  window.fbq?.("trackCustom", metaEvent);
-  window.dataLayer?.push({ event: gaEvent, source: "landing_page" });
+  if (typeof window.fbq === "function") {
+    window.fbq("trackCustom", metaEvent);
+  }
+  if (Array.isArray(window.dataLayer)) {
+    window.dataLayer.push({ event: gaEvent, source: "landing_page" });
+  }
 }
 
 function StoreButtons({ className = "" }: { className?: string }) {
@@ -60,8 +64,7 @@ function StoreButtons({ className = "" }: { className?: string }) {
       <a
         className="store-button"
         href={APP_STORE_URL}
-        target="_blank"
-        rel="noopener noreferrer"
+        target="_self"
         onClick={() => track("ClickAppStore", "download_click")}
         aria-label="Download Card Cosmic on the App Store"
       >
@@ -70,8 +73,7 @@ function StoreButtons({ className = "" }: { className?: string }) {
       <a
         className="store-button"
         href={GOOGLE_PLAY_URL}
-        target="_blank"
-        rel="noopener noreferrer"
+        target="_self"
         onClick={() => track("ClickGooglePlay", "download_click")}
         aria-label="Get Card Cosmic on Google Play"
       >

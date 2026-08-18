@@ -264,6 +264,8 @@ h1 span {
   display: flex;
   align-items: center;
   justify-content: center;
+  position: relative;
+  z-index: 2;
   padding: 6px;
   border: 2px solid rgba(248, 184, 31, 0.72);
   border-radius: 15px;
@@ -272,6 +274,8 @@ h1 span {
     0 0 0 3px rgba(248, 184, 31, 0.08);
   transition: transform 160ms ease, border-color 160ms ease,
     box-shadow 160ms ease;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: rgba(248, 184, 31, 0.2);
 }
 
 .store-button:hover {
@@ -290,6 +294,7 @@ h1 span {
   display: block;
   width: auto;
   height: 50px;
+  pointer-events: none;
 }
 
 .download-panel {
