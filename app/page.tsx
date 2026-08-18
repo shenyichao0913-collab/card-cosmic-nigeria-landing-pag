@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 
 const APP_STORE_URL =
-  "https://apps.apple.com/us/app/cardcosmic/id6756063147";
+  "https://apps.apple.com/ng/app/cardcosmic/id6756063147?uo=4";
 const GOOGLE_PLAY_URL =
   "https://play.google.com/store/apps/details?id=app.com.cardlaxy&pli=1";
 
@@ -60,6 +60,8 @@ function StoreButtons({ className = "" }: { className?: string }) {
       <a
         className="store-button"
         href={APP_STORE_URL}
+        target="_blank"
+        rel="noopener noreferrer"
         onClick={() => track("ClickAppStore", "download_click")}
         aria-label="Download Card Cosmic on the App Store"
       >
@@ -68,6 +70,8 @@ function StoreButtons({ className = "" }: { className?: string }) {
       <a
         className="store-button"
         href={GOOGLE_PLAY_URL}
+        target="_blank"
+        rel="noopener noreferrer"
         onClick={() => track("ClickGooglePlay", "download_click")}
         aria-label="Get Card Cosmic on Google Play"
       >
