@@ -1,9 +1,9 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 const APP_STORE_URL =
-  "https://apps.apple.com/ng/app/cardcosmic/id6756063147";
+  "https://apps.apple.com/us/app/cardcosmic/id6756063147";
 const GOOGLE_PLAY_URL =
   "https://play.google.com/store/apps/details?id=app.com.cardlaxy&pli=1";
 
@@ -54,10 +54,34 @@ function track(metaEvent: string, gaEvent: string) {
   window.dataLayer?.push({ event: gaEvent, source: "landing_page" });
 }
 
+function StoreButtons({ className = "" }: { className?: string }) {
+  return (
+    <div className={`store-row ${className}`.trim()} aria-label="Download Card Cosmic">
+      <a
+        className="store-button"
+        href={APP_STORE_URL}
+        onClick={() => track("ClickAppStore", "download_click")}
+        aria-label="Download Card Cosmic on the App Store"
+      >
+        <img src="/assets/appstore.svg" alt="Download on the App Store" />
+      </a>
+      <a
+        className="store-button"
+        href={GOOGLE_PLAY_URL}
+        onClick={() => track("ClickGooglePlay", "download_click")}
+        aria-label="Get Card Cosmic on Google Play"
+      >
+        <img src="/assets/googleplay.svg" alt="Get it on Google Play" />
+      </a>
+    </div>
+  );
+}
+
 export default function Home() {
   const [copied, setCopied] = useState(false);
   const [activeShot, setActiveShot] = useState(0);
   const [openFaq, setOpenFaq] = useState<number | null>(0);
+  const downloadRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     track("PageView", "page_view");
@@ -70,6 +94,16 @@ export default function Home() {
     window.setTimeout(() => setCopied(false), 1800);
   }
 
+  function focusDownloadOptions() {
+    downloadRef.current?.scrollIntoView({
+      behavior: "smooth",
+      block: "center",
+      inline: "nearest",
+    });
+    downloadRef.current?.focus({ preventScroll: true });
+    track("MobileDownload", "button_click");
+  }
+
   return (
     <main>
       <section className="hero" id="top">
@@ -77,9 +111,7 @@ export default function Home() {
           <a href="#top" className="brand" aria-label="Card Cosmic home">
             <img src="/assets/logo-cosmic.svg" alt="Card Cosmic" />
           </a>
-          <a className="nav-link" href="#download">
-            Download app
-          </a>
+          <StoreButtons className="nav-store-row" />
         </nav>
 
         <div className="hero-grid shell">
@@ -129,25 +161,14 @@ export default function Home() {
               </button>
             </div>
 
-            <div className="store-row" id="download">
-              <a
-                href={APP_STORE_URL}
-                target="_blank"
-                rel="noreferrer"
-                onClick={() => track("ClickAppStore", "download_click")}
-                aria-label="Download Card Cosmic on the App Store"
-              >
-                <img src="/assets/appstore.svg" alt="Download on the App Store" />
-              </a>
-              <a
-                href={GOOGLE_PLAY_URL}
-                target="_blank"
-                rel="noreferrer"
-                onClick={() => track("ClickGooglePlay", "download_click")}
-                aria-label="Get Card Cosmic on Google Play"
-              >
-                <img src="/assets/googleplay.svg" alt="Get it on Google Play" />
-              </a>
+            <div
+              className="download-panel"
+              id="download"
+              ref={downloadRef}
+              tabIndex={-1}
+            >
+              <span className="download-panel-label">Download the official app</span>
+              <StoreButtons className="hero-store-row" />
             </div>
             <p className="eligibility-note">
               New users only. Reward eligibility and Card Cosmic terms apply.
@@ -429,24 +450,7 @@ export default function Home() {
             <button type="button" onClick={copyCode}>
               {copied ? "Code copied!" : "Copy code 555555"}
             </button>
-            <div className="store-row compact-store-row">
-              <a
-                href={APP_STORE_URL}
-                target="_blank"
-                rel="noreferrer"
-                onClick={() => track("ClickAppStore", "download_click")}
-              >
-                <img src="/assets/appstore.svg" alt="Download on the App Store" />
-              </a>
-              <a
-                href={GOOGLE_PLAY_URL}
-                target="_blank"
-                rel="noreferrer"
-                onClick={() => track("ClickGooglePlay", "download_click")}
-              >
-                <img src="/assets/googleplay.svg" alt="Get it on Google Play" />
-              </a>
-            </div>
+            <StoreButtons className="compact-store-row" />
           </div>
           <small>New users only. Reward eligibility and current terms apply.</small>
         </div>
@@ -471,7 +475,10 @@ export default function Home() {
         </div>
         <a
           href="#download"
-          onClick={() => track("MobileDownload", "button_click")}
+          onClick={(event) => {
+            event.preventDefault();
+            focusDownloadOptions();
+          }}
         >
           Download app
         </a>
