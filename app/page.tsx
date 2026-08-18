@@ -11,10 +11,10 @@ const GOOGLE_PLAY_URL =
   "https://play.google.com/store/apps/details?id=app.com.cardlaxy&pli=1";
 
 const screenshots = [
-  { src: "/assets/app-home.png", label: "Home", detail: "Rates and balance" },
-  { src: "/assets/app-trade.png", label: "Trade", detail: "Transaction history" },
-  { src: "/assets/app-secure.png", label: "Track", detail: "Order details" },
-  { src: "/assets/app-withdraw.png", label: "Cash out", detail: "Completed withdrawal" },
+  { src: "/assets/app-home.png?v=12", label: "Home", detail: "Rates and balance" },
+  { src: "/assets/app-trade.png?v=12", label: "Trade", detail: "Transaction history" },
+  { src: "/assets/app-secure.png?v=12", label: "Track", detail: "Order details" },
+  { src: "/assets/app-withdraw.png?v=12", label: "Cash out", detail: "Completed withdrawal" },
 ];
 
 const faqs = [

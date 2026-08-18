@@ -46,9 +46,10 @@ test("server-renders the Card Cosmic conversion page", async () => {
 });
 
 test("removes the disposable starter preview surface", async () => {
-  const [page, layout, packageJson] = await Promise.all([
+  const [page, layout, styles, packageJson] = await Promise.all([
     readFile(new URL("../app/page.tsx", import.meta.url), "utf8"),
     readFile(new URL("../app/layout.tsx", import.meta.url), "utf8"),
+    readFile(new URL("../app/globals.css", import.meta.url), "utf8"),
     readFile(new URL("../package.json", import.meta.url), "utf8"),
   ]);
 
@@ -56,6 +57,8 @@ test("removes the disposable starter preview surface", async () => {
   assert.match(page, /beautystar-entertainment\.png/);
   assert.match(page, /CopyInviteCode/);
   assert.match(page, /itms-apps:\/\/itunes\.apple\.com\/app\/id6756063147/);
+  assert.match(page, /app-home\.png\?v=12/);
+  assert.match(styles, /\.benefits-section \.heading-split\s*{\s*grid-template-columns: minmax\(0, 1fr\)/);
   assert.match(layout, /en-NG/);
   assert.match(layout, /Invite Code 555555/);
   assert.match(layout, /apple-itunes-app/);

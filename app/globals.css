@@ -1527,6 +1527,21 @@ a:focus-visible {
     margin-bottom: 28px;
   }
 
+  .benefits-section .heading-split {
+    grid-template-columns: minmax(0, 1fr);
+    align-items: start;
+    gap: 18px;
+  }
+
+  .benefits-section .section-heading h2 {
+    max-width: 12ch;
+  }
+
+  .benefits-section .section-heading p {
+    max-width: 620px;
+    margin: 0;
+  }
+
   .heading-split,
   .showcase-grid,
   .security-grid,
@@ -1694,7 +1709,7 @@ a:focus-visible {
   }
 
   .benefits-section .heading-split {
-    gap: 12px;
+    gap: 16px;
   }
 
   .benefits-section .section-heading {
@@ -1702,12 +1717,22 @@ a:focus-visible {
   }
 
   .benefits-section .section-heading h2 {
-    font-size: clamp(32px, 9vw, 42px);
+    max-width: 11ch;
+    font-size: clamp(36px, 10.5vw, 44px);
+    line-height: 1;
+    text-wrap: balance;
   }
 
   .benefits-section .section-heading p {
-    font-size: 14px;
-    line-height: 1.45;
+    margin: 0;
+    font-size: 15px;
+    line-height: 1.55;
+  }
+
+  .benefits-section .kicker {
+    white-space: nowrap;
+    font-size: 11px;
+    letter-spacing: 0.1em;
   }
 
   .section-heading h2,
