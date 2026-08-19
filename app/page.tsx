@@ -52,17 +52,29 @@ declare global {
   }
 }
 
-function track(metaEvent: string, gaEvent: string) {
+function track(
+  metaEvent: string,
+  gaEvent: string,
+  parameters: Record<string, string> = {},
+) {
   if (typeof window.fbq === "function") {
-    window.fbq("trackCustom", metaEvent);
+    window.fbq("trackCustom", metaEvent, parameters);
   }
   if (Array.isArray(window.dataLayer)) {
-    window.dataLayer.push({ event: gaEvent, source: "landing_page" });
+    window.dataLayer.push({
+      event: gaEvent,
+      source: "landing_page",
+      ...parameters,
+    });
   }
 }
 
 function openAppStore(event: MouseEvent<HTMLAnchorElement>) {
-  track("ClickAppStore", "download_click");
+  track("AppDownloadClick", "app_download_click", {
+    app_name: "Card Cosmic",
+    store: "apple_app_store",
+    destination_url: APP_STORE_URL,
+  });
 
   const isIOS =
     /iPad|iPhone|iPod/i.test(window.navigator.userAgent) ||
@@ -91,7 +103,13 @@ function StoreButtons({ className = "" }: { className?: string }) {
         className="store-button"
         href={GOOGLE_PLAY_URL}
         target="_self"
-        onClick={() => track("ClickGooglePlay", "download_click")}
+        onClick={() =>
+          track("AppDownloadClick", "app_download_click", {
+            app_name: "Card Cosmic",
+            store: "google_play",
+            destination_url: GOOGLE_PLAY_URL,
+          })
+        }
         aria-label="Get Card Cosmic on Google Play"
       >
         <img src="/assets/googleplay.svg" alt="Get it on Google Play" />
