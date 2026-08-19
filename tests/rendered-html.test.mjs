@@ -42,6 +42,13 @@ test("server-renders the Card Cosmic conversion page", async () => {
   assert.match(html, /beautystar_entertainment/);
   assert.match(html, /reliable and stable gift card vendor/i);
   assert.match(html, /Real user transaction/i);
+  assert.match(html, /connect\.facebook\.net\/en_US\/fbevents\.js/);
+  assert.match(html, /fbq\('init','1070099105418933'\)/);
+  assert.match(html, /fbq\('track','PageView'\)/);
+  assert.match(
+    html,
+    /facebook\.com\/tr\?id=1070099105418933(?:&|&amp;)ev=PageView(?:&|&amp;)noscript=1/,
+  );
   assert.doesNotMatch(html, /codex-preview|SkeletonPreview|react-loading-skeleton/i);
 });
 
