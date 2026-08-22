@@ -142,6 +142,166 @@ h1 span {
   text-shadow: 0 12px 40px rgba(248, 184, 31, 0.2);
 }
 
+.campaign-card {
+  position: relative;
+  overflow: hidden;
+  padding: clamp(24px, 3vw, 34px);
+  border: 1px solid rgba(248, 184, 31, 0.34);
+  border-radius: 30px;
+  background:
+    radial-gradient(circle at 92% 5%, rgba(55, 110, 255, 0.2), transparent 28%),
+    linear-gradient(145deg, rgba(13, 35, 65, 0.96), rgba(7, 17, 31, 0.94));
+  box-shadow:
+    0 30px 80px rgba(0, 0, 0, 0.32),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+.campaign-card::before {
+  content: "";
+  position: absolute;
+  width: 240px;
+  height: 240px;
+  right: -140px;
+  top: -145px;
+  border-radius: 50%;
+  background: rgba(248, 184, 31, 0.18);
+  filter: blur(16px);
+  pointer-events: none;
+}
+
+.campaign-card h1 {
+  margin: 20px 0 17px;
+  font-size: clamp(42px, 5.1vw, 68px);
+}
+
+.campaign-topline {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.campaign-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  padding: 8px 12px;
+  border: 1px solid rgba(248, 184, 31, 0.42);
+  border-radius: 999px;
+  color: var(--gold-soft);
+  background: rgba(248, 184, 31, 0.1);
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+  font-size: 11px;
+  font-weight: 900;
+}
+
+.campaign-status {
+  padding: 7px 10px;
+  border-radius: 999px;
+  color: #dce8f9;
+  background: rgba(255, 255, 255, 0.08);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 10px;
+  font-weight: 900;
+}
+
+.campaign-active .campaign-status {
+  color: #d8ffe8;
+  background: rgba(46, 194, 113, 0.18);
+  box-shadow: inset 0 0 0 1px rgba(92, 232, 154, 0.3);
+}
+
+.campaign-ended .campaign-status {
+  color: #ffd9d5;
+  background: rgba(255, 94, 87, 0.16);
+  box-shadow: inset 0 0 0 1px rgba(255, 121, 115, 0.24);
+}
+
+.campaign-card .hero-lead {
+  margin-bottom: 20px;
+  font-size: clamp(15px, 1.5vw, 18px);
+  line-height: 1.55;
+}
+
+.campaign-timing {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 18px;
+  margin-bottom: 20px;
+  padding: 16px 17px;
+  border: 1px solid rgba(248, 184, 31, 0.48);
+  border-radius: 18px;
+  background:
+    linear-gradient(115deg, rgba(248, 184, 31, 0.2), rgba(248, 184, 31, 0.06));
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+.offer-period {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.offer-period span,
+.campaign-countdown > span {
+  color: var(--gold-soft);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-size: 9px;
+  font-weight: 900;
+}
+
+.offer-period strong {
+  color: #fff;
+  font-size: 14px;
+  line-height: 1.35;
+}
+
+.campaign-countdown {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 6px;
+}
+
+.countdown-units {
+  display: flex;
+  gap: 6px;
+}
+
+.countdown-units strong {
+  min-width: 48px;
+  padding: 7px 8px;
+  border-radius: 11px;
+  color: #111827;
+  background: var(--gold);
+  text-align: center;
+  font-size: 17px;
+  line-height: 1;
+}
+
+.countdown-units small {
+  display: block;
+  margin-top: 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-size: 7px;
+}
+
+.campaign-state-message {
+  max-width: 190px;
+  margin: 0;
+  color: #fff3cb;
+  text-align: right;
+  font-size: 12px;
+  font-weight: 800;
+  line-height: 1.45;
+}
+
 .hero-lead {
   max-width: 645px;
   margin: 0 0 26px;
@@ -172,6 +332,19 @@ h1 span {
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 15px;
   background: rgba(255, 255, 255, 0.045);
+}
+
+.campaign-card .registration-flow {
+  width: 100%;
+}
+
+.campaign-card .registration-flow li {
+  border-color: rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.campaign-card .registration-flow small {
+  color: #aebdd3;
 }
 
 .registration-flow li > span {
@@ -330,6 +503,35 @@ h1 span {
   margin: 13px 0 0;
   color: #8191aa;
   font-size: 12px;
+}
+
+.campaign-eligibility {
+  margin-top: 16px;
+  padding: 14px 15px;
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  border-radius: 15px;
+  color: #9eacc1;
+  background: rgba(0, 0, 0, 0.14);
+  font-size: 10px;
+  line-height: 1.5;
+}
+
+.campaign-eligibility > strong {
+  display: block;
+  margin-bottom: 5px;
+  color: #dce6f5;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 9px;
+}
+
+.campaign-eligibility ul {
+  margin: 0;
+  padding-left: 17px;
+}
+
+.campaign-eligibility li + li {
+  margin-top: 2px;
 }
 
 .hero-visual {
@@ -1314,6 +1516,10 @@ a:focus-visible {
     text-align: center;
   }
 
+  .campaign-card {
+    text-align: left;
+  }
+
   .hero-lead,
   .code-card,
   .registration-flow {
@@ -1383,6 +1589,54 @@ a:focus-visible {
   .hero-grid {
     min-height: auto;
     padding-top: 30px;
+  }
+
+  .campaign-card {
+    padding: 20px 16px;
+    border-radius: 24px;
+  }
+
+  .campaign-card h1 {
+    margin: 18px 0 15px;
+    font-size: clamp(39px, 12vw, 52px);
+  }
+
+  .campaign-badge {
+    padding: 7px 9px;
+    font-size: 9px;
+    letter-spacing: 0.07em;
+  }
+
+  .campaign-status {
+    font-size: 8px;
+  }
+
+  .campaign-card .hero-lead {
+    margin-bottom: 17px;
+    font-size: 15px;
+  }
+
+  .campaign-timing {
+    grid-template-columns: 1fr;
+    gap: 14px;
+    padding: 15px;
+  }
+
+  .campaign-countdown {
+    align-items: flex-start;
+  }
+
+  .campaign-state-message {
+    max-width: none;
+    text-align: left;
+  }
+
+  .countdown-units {
+    width: 100%;
+  }
+
+  .countdown-units strong {
+    flex: 1 1 0;
   }
 
   h1 {

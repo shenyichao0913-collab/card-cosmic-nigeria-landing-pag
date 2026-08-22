@@ -42,6 +42,8 @@ test("server-renders the Card Cosmic conversion page", async () => {
   assert.match(html, /beautystar_entertainment/);
   assert.match(html, /reliable and stable gift card vendor/i);
   assert.match(html, /Real user transaction/i);
+  assert.match(html, /LIMITED TIME OFFER • NIGERIA ONLY/);
+  assert.match(html, /Offer Period \(Nigeria Time\)/);
   assert.match(html, /connect\.facebook\.net\/en_US\/fbevents\.js/);
   assert.match(html, /fbq\('init','1070099105418933'\)/);
   assert.match(html, /fbq\('track','PageView'\)/);
@@ -60,7 +62,11 @@ test("removes the disposable starter preview surface", async () => {
     readFile(new URL("../package.json", import.meta.url), "utf8"),
   ]);
 
-  assert.match(page, /Register in 3 steps\. Get <span>₦3,000\.<\/span>/);
+  assert.match(page, /Register in 3 Steps\. Get <span>₦3,000\.<\/span>/);
+  assert.match(page, /Date\.UTC\(2026, 7, 22, 23, 0, 0\)/);
+  assert.match(page, /Date\.UTC\(2026, 7, 25, 23, 0, 0\)/);
+  assert.match(page, /Campaign starts on August 23, 2026\./);
+  assert.match(page, /This ₦3,000 new-user campaign has ended\./);
   assert.match(page, /beautystar-entertainment\.png/);
   assert.match(page, /CopyInviteCode/);
   assert.match(page, /itms-apps:\/\/itunes\.apple\.com\/app\/id6756063147/);

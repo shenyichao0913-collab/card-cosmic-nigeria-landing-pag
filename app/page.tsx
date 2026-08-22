@@ -10,6 +10,28 @@ const APP_STORE_IOS_URL =
 const GOOGLE_PLAY_URL =
   "https://play.google.com/store/apps/details?id=app.com.cardlaxy&pli=1";
 
+// Nigeria observes WAT (UTC+1) year-round. These UTC boundaries represent
+// Aug 23, 2026 00:00 WAT through Aug 25, 2026 23:59 WAT.
+const CAMPAIGN_START_UTC = Date.UTC(2026, 7, 22, 23, 0, 0);
+const CAMPAIGN_END_UTC = Date.UTC(2026, 7, 25, 23, 0, 0);
+
+type CampaignStatus = "upcoming" | "active" | "ended";
+
+function getCampaignStatus(now: number): CampaignStatus {
+  if (now < CAMPAIGN_START_UTC) return "upcoming";
+  if (now < CAMPAIGN_END_UTC) return "active";
+  return "ended";
+}
+
+function getCampaignCountdown(now: number) {
+  const remaining = Math.max(0, CAMPAIGN_END_UTC - now);
+  return {
+    days: Math.floor(remaining / 86_400_000),
+    hours: Math.floor((remaining % 86_400_000) / 3_600_000),
+    minutes: Math.floor((remaining % 3_600_000) / 60_000),
+  };
+}
+
 const screenshots = [
   { src: "/assets/app-home.png?v=12", label: "Home", detail: "Rates and balance" },
   { src: "/assets/app-trade.png?v=12", label: "Trade", detail: "Transaction history" },
@@ -122,11 +144,17 @@ export default function Home() {
   const [copied, setCopied] = useState(false);
   const [activeShot, setActiveShot] = useState(0);
   const [openFaq, setOpenFaq] = useState<number | null>(0);
+  const [campaignNow, setCampaignNow] = useState(() => Date.now());
   const downloadRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     track("PageView", "page_view");
+    const timer = window.setInterval(() => setCampaignNow(Date.now()), 30_000);
+    return () => window.clearInterval(timer);
   }, []);
+
+  const campaignStatus = getCampaignStatus(campaignNow);
+  const campaignCountdown = getCampaignCountdown(campaignNow);
 
   async function copyCode() {
     await navigator.clipboard.writeText("555555");
@@ -156,17 +184,65 @@ export default function Home() {
         </nav>
 
         <div className="hero-grid shell">
-          <div className="hero-copy">
-            <div className="eyebrow">
-              <span className="eyebrow-dot" /> Welcome reward · 3 easy steps
+          <div className={`hero-copy campaign-card campaign-${campaignStatus}`}>
+            <div className="campaign-topline">
+              <div className="campaign-badge">
+                <span className="eyebrow-dot" /> LIMITED TIME OFFER • NIGERIA ONLY
+              </div>
+              <span className="campaign-status">
+                {campaignStatus === "active"
+                  ? "Live now"
+                  : campaignStatus === "upcoming"
+                    ? "Coming soon"
+                    : "Campaign ended"}
+              </span>
             </div>
-            <h1>
-              Register in 3 steps. Get <span>₦3,000.</span>
-            </h1>
-            <p className="hero-lead">
-              New to Card Cosmic? Follow this quick registration flow and use
-              the invitation code below to become eligible for the welcome reward.
-            </p>
+
+            {campaignStatus === "ended" ? (
+              <>
+                <h1>
+                  Campaign <span>Ended</span>
+                </h1>
+                <p className="hero-lead">
+                  This ₦3,000 new-user campaign has ended.
+                </p>
+              </>
+            ) : (
+              <>
+                <h1>
+                  Register in 3 Steps. Get <span>₦3,000.</span>
+                </h1>
+                <p className="hero-lead">
+                  New to Card Cosmic? Nigerian users who complete registration
+                  and enter invitation code 555555 between August 23 and August
+                  25, 2026 can become eligible for the ₦3,000 new-user reward.
+                </p>
+              </>
+            )}
+
+            <div className="campaign-timing">
+              <div className="offer-period">
+                <span>Offer Period (Nigeria Time)</span>
+                <strong>August 23, 2026 – August 25, 2026</strong>
+              </div>
+
+              {campaignStatus === "active" ? (
+                <div className="campaign-countdown" aria-live="polite">
+                  <span>Ends in</span>
+                  <div className="countdown-units">
+                    <strong>{campaignCountdown.days}<small>days</small></strong>
+                    <strong>{campaignCountdown.hours}<small>hours</small></strong>
+                    <strong>{campaignCountdown.minutes}<small>mins</small></strong>
+                  </div>
+                </div>
+              ) : (
+                <p className="campaign-state-message" aria-live="polite">
+                  {campaignStatus === "upcoming"
+                    ? "Campaign starts on August 23, 2026."
+                    : "This ₦3,000 new-user campaign has ended."}
+                </p>
+              )}
+            </div>
 
             <ol className="registration-flow" aria-label="Card Cosmic registration steps">
               <li>
@@ -187,7 +263,11 @@ export default function Home() {
                 <span>03</span>
                 <div>
                   <strong>Enter invitation code 555555</strong>
-                  <small>Complete registration and check the current reward terms.</small>
+                  <small>
+                    {campaignStatus === "ended"
+                      ? "The campaign has ended; the invitation code remains available for registration only."
+                      : "Complete registration during the campaign period to become eligible for the ₦3,000 reward."}
+                  </small>
                 </div>
               </li>
             </ol>
@@ -198,7 +278,7 @@ export default function Home() {
                 <strong className="code-value">555555</strong>
               </div>
               <button type="button" onClick={copyCode} aria-live="polite">
-                {copied ? "Copied!" : "Copy code"}
+                {copied ? "Copied!" : "Copy Code"}
               </button>
             </div>
 
@@ -211,9 +291,15 @@ export default function Home() {
               <span className="download-panel-label">Download the official app</span>
               <StoreButtons className="hero-store-row" />
             </div>
-            <p className="eligibility-note">
-              New users only. Reward eligibility and Card Cosmic terms apply.
-            </p>
+
+            <div className="campaign-eligibility">
+              <strong>Eligibility notice</strong>
+              <ul>
+                <li>Only eligible new Nigerian users can participate.</li>
+                <li>Duplicate, repeated, or previously registered accounts are not eligible.</li>
+                <li>This reward is only available during the campaign period.</li>
+              </ul>
+            </div>
           </div>
 
           <figure className="hero-visual creator-visual">
