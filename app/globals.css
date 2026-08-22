@@ -534,6 +534,305 @@ h1 span {
   margin-top: 2px;
 }
 
+.campaign-hero-grid {
+  min-height: auto;
+  grid-template-columns: 1fr;
+  gap: 0;
+  padding-block: 30px 58px;
+}
+
+.campaign-card {
+  width: 100%;
+  display: grid;
+  grid-template-columns: minmax(0, 1.12fr) minmax(340px, 0.88fr);
+  grid-template-areas:
+    "badges countdown"
+    "headline reward"
+    "support reward"
+    "date reward"
+    "steps invite"
+    "steps download"
+    "eligibility eligibility";
+  align-items: start;
+  gap: 18px 30px;
+}
+
+.campaign-badges {
+  grid-area: badges;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.campaign-badges span {
+  padding: 8px 11px;
+  border: 1px solid rgba(248, 184, 31, 0.38);
+  border-radius: 999px;
+  color: var(--gold-soft);
+  background: rgba(248, 184, 31, 0.1);
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  font-size: 10px;
+  font-weight: 900;
+}
+
+.campaign-countdown {
+  grid-area: countdown;
+  width: 100%;
+  align-items: stretch;
+  padding: 14px 15px;
+  border: 1px solid rgba(248, 184, 31, 0.42);
+  border-radius: 18px;
+  background: linear-gradient(135deg, rgba(248, 184, 31, 0.18), rgba(5, 12, 23, 0.7));
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.2);
+}
+
+.campaign-countdown > span {
+  text-align: center;
+  font-size: 10px;
+}
+
+.countdown-units {
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.countdown-units strong {
+  flex: 1 1 0;
+  min-width: 0;
+  padding: 10px 8px 8px;
+  border: 1px solid rgba(248, 184, 31, 0.35);
+  border-radius: 12px;
+  color: #fff;
+  background: rgba(3, 10, 20, 0.88);
+  font-size: clamp(20px, 2.6vw, 30px);
+  font-variant-numeric: tabular-nums;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
+}
+
+.countdown-units b {
+  color: var(--gold);
+  font-size: 24px;
+  line-height: 1;
+}
+
+.countdown-units small {
+  color: #98a8bf;
+  font-size: 7px;
+}
+
+.campaign-headline {
+  grid-area: headline;
+}
+
+.campaign-headline > span {
+  display: inline-block;
+  color: var(--gold);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-size: 11px;
+  font-weight: 900;
+}
+
+.campaign-headline h1 {
+  max-width: 660px;
+  margin: 13px 0 0;
+  font-size: clamp(44px, 5.2vw, 70px);
+}
+
+.campaign-headline h1 strong {
+  display: block;
+  margin-top: 8px;
+  color: var(--gold);
+  font-size: 0.62em;
+  line-height: 1.08;
+  letter-spacing: -0.035em;
+}
+
+.campaign-support {
+  grid-area: support;
+  max-width: 660px;
+  margin: 0;
+  color: #bcc9dc;
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+.campaign-support > strong {
+  color: #fff;
+}
+
+.campaign-reward {
+  grid-area: reward;
+  min-height: 320px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 28px 24px;
+  border: 1px solid rgba(248, 184, 31, 0.56);
+  border-radius: 24px;
+  background:
+    radial-gradient(circle at 50% 30%, rgba(255, 218, 116, 0.2), transparent 35%),
+    linear-gradient(155deg, rgba(248, 184, 31, 0.2), rgba(7, 17, 31, 0.74));
+  text-align: center;
+  box-shadow:
+    0 24px 56px rgba(0, 0, 0, 0.28),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+.campaign-reward > span {
+  color: var(--gold-soft);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-size: 11px;
+  font-weight: 900;
+}
+
+.campaign-reward > strong {
+  margin: 12px 0 18px;
+  color: var(--gold);
+  font-size: clamp(68px, 8vw, 104px);
+  line-height: 0.92;
+  letter-spacing: -0.06em;
+  text-shadow: 0 18px 48px rgba(248, 184, 31, 0.28);
+}
+
+.reward-requirements {
+  width: 100%;
+  display: grid;
+  gap: 5px;
+  padding-top: 16px;
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+  color: #dce5f2;
+  font-size: 12px;
+}
+
+.reward-requirements b {
+  color: var(--gold);
+  font-size: 20px;
+  line-height: 1;
+}
+
+.reward-requirements strong {
+  color: #fff;
+  font-size: 30px;
+  letter-spacing: 0.15em;
+}
+
+.reward-requirements small {
+  color: #93a3ba;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 8px;
+}
+
+.campaign-date {
+  grid-area: date;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 13px 15px;
+  border-left: 3px solid var(--gold);
+  border-radius: 0 13px 13px 0;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.campaign-date span {
+  color: #91a2ba;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 9px;
+  font-weight: 900;
+}
+
+.campaign-date strong {
+  font-size: 14px;
+}
+
+.campaign-steps {
+  grid-area: steps;
+  margin: 0;
+}
+
+.campaign-steps li {
+  min-height: 72px;
+  padding: 12px 14px;
+}
+
+.campaign-invite {
+  grid-area: invite;
+  width: 100%;
+  margin: 0;
+  border-color: rgba(248, 184, 31, 0.32);
+  background: rgba(248, 184, 31, 0.08);
+}
+
+.campaign-invite .code-value {
+  color: var(--gold);
+}
+
+.campaign-download {
+  grid-area: download;
+  width: 100%;
+  margin: 0;
+}
+
+.campaign-download .store-row {
+  flex-wrap: wrap;
+}
+
+.campaign-eligibility {
+  grid-area: eligibility;
+  margin-top: 2px;
+}
+
+.campaign-eligibility p {
+  margin: 0;
+}
+
+.campaign-ended-panel {
+  grid-column: 1 / -1;
+  min-height: 520px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 50px 24px;
+  text-align: center;
+}
+
+.campaign-ended-badge {
+  padding: 9px 13px;
+  border: 1px solid rgba(255, 121, 115, 0.34);
+  border-radius: 999px;
+  color: #ffd9d5;
+  background: rgba(255, 94, 87, 0.14);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-size: 11px;
+  font-weight: 900;
+}
+
+.campaign-ended-panel h1 {
+  max-width: 780px;
+  margin: 24px 0 16px;
+}
+
+.campaign-ended-panel p {
+  max-width: 620px;
+  margin: 0;
+  color: #b9c6d8;
+  font-size: 17px;
+  line-height: 1.6;
+}
+
+.ended-store-row {
+  justify-content: center;
+}
+
 .hero-visual {
   min-height: 690px;
   align-self: stretch;
@@ -1517,7 +1816,27 @@ a:focus-visible {
   }
 
   .campaign-card {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "badges"
+      "countdown"
+      "headline"
+      "support"
+      "reward"
+      "date"
+      "steps"
+      "invite"
+      "download"
+      "eligibility";
     text-align: left;
+  }
+
+  .campaign-hero-grid {
+    padding-top: 34px;
+  }
+
+  .campaign-reward {
+    min-height: 290px;
   }
 
   .hero-lead,
@@ -1594,11 +1913,26 @@ a:focus-visible {
   .campaign-card {
     padding: 20px 16px;
     border-radius: 24px;
+    gap: 16px;
   }
 
   .campaign-card h1 {
     margin: 18px 0 15px;
     font-size: clamp(39px, 12vw, 52px);
+  }
+
+  .campaign-headline h1 strong {
+    margin-top: 7px;
+    font-size: 0.66em;
+  }
+
+  .campaign-badges {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  .campaign-badges span {
+    width: fit-content;
   }
 
   .campaign-badge {
@@ -1624,6 +1958,7 @@ a:focus-visible {
 
   .campaign-countdown {
     align-items: flex-start;
+    padding: 14px 12px;
   }
 
   .campaign-state-message {
@@ -1637,6 +1972,34 @@ a:focus-visible {
 
   .countdown-units strong {
     flex: 1 1 0;
+    padding-inline: 5px;
+    font-size: clamp(21px, 8vw, 30px);
+  }
+
+  .countdown-units b {
+    font-size: 18px;
+  }
+
+  .campaign-reward {
+    min-height: 280px;
+    padding: 24px 18px;
+  }
+
+  .campaign-reward > strong {
+    font-size: clamp(68px, 23vw, 94px);
+  }
+
+  .campaign-steps li {
+    min-height: 78px;
+  }
+
+  .campaign-invite {
+    align-items: stretch;
+  }
+
+  .campaign-ended-panel {
+    min-height: 440px;
+    padding: 36px 5px;
   }
 
   h1 {

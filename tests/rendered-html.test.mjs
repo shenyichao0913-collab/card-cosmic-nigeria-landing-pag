@@ -38,12 +38,8 @@ test("server-renders the Card Cosmic conversion page", async () => {
   assert.match(html, /target="_self"/);
   assert.match(html, /play\.google\.com\/store\/apps/);
   assert.match(html, /class="store-button"/);
-  assert.match(html, /id="download"/);
-  assert.match(html, /beautystar_entertainment/);
-  assert.match(html, /reliable and stable gift card vendor/i);
   assert.match(html, /Real user transaction/i);
-  assert.match(html, /LIMITED TIME OFFER • NIGERIA ONLY/);
-  assert.match(html, /Offer Period \(Nigeria Time\)/);
+  assert.match(html, /Limited Time Offer|Campaign Ended/i);
   assert.match(html, /connect\.facebook\.net\/en_US\/fbevents\.js/);
   assert.match(html, /fbq\('init','1070099105418933'\)/);
   assert.match(html, /fbq\('track','PageView'\)/);
@@ -62,18 +58,22 @@ test("removes the disposable starter preview surface", async () => {
     readFile(new URL("../package.json", import.meta.url), "utf8"),
   ]);
 
-  assert.match(page, /Register in 3 Steps\. Get <span>₦3,000\.<\/span>/);
-  assert.match(page, /Date\.UTC\(2026, 7, 22, 23, 0, 0\)/);
+  assert.match(page, /Join Card Cosmic Today/);
+  assert.match(page, /Unlock Your ₦3,000 Welcome Benefit/);
+  assert.match(page, /Date\.UTC\(2026, 7, 21, 23, 0, 0\)/);
   assert.match(page, /Date\.UTC\(2026, 7, 25, 23, 0, 0\)/);
-  assert.match(page, /Campaign starts on August 23, 2026\./);
-  assert.match(page, /This ₦3,000 new-user campaign has ended\./);
-  assert.match(page, /beautystar-entertainment\.png/);
+  assert.match(page, /setInterval\(\(\) => setCampaignNow\(Date\.now\(\)\), 1_000\)/);
+  assert.match(page, /Campaign Ends In/);
+  assert.match(page, /campaignCountdown\.seconds/);
+  assert.match(page, /The ₦3,000 Welcome Campaign Has Ended/);
+  assert.match(page, /id="download"/);
   assert.match(page, /CopyInviteCode/);
   assert.match(page, /itms-apps:\/\/itunes\.apple\.com\/app\/id6756063147/);
   assert.match(page, /app-home\.png\?v=12/);
   assert.match(page, /track\("AppDownloadClick", "app_download_click"/);
   assert.match(page, /store: "apple_app_store"/);
   assert.match(page, /store: "google_play"/);
+  assert.doesNotMatch(page, /FREE MONEY|MAKE MONEY|EARN MONEY|GET CASH|GUARANTEED PROFIT/i);
   assert.match(styles, /\.benefits-section \.heading-split\s*{\s*grid-template-columns: minmax\(0, 1fr\)/);
   assert.match(layout, /en-NG/);
   assert.match(layout, /Invite Code 555555/);
