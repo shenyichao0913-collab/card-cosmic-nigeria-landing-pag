@@ -14,6 +14,8 @@ const GOOGLE_PLAY_URL =
 // Aug 22, 2026 00:00 WAT through Aug 25, 2026 23:59:59 WAT.
 const CAMPAIGN_START_UTC = Date.UTC(2026, 7, 21, 23, 0, 0);
 const CAMPAIGN_END_UTC = Date.UTC(2026, 7, 25, 23, 0, 0);
+const VISITOR_OFFER_DURATION_MS = 24 * 60 * 60 * 1_000;
+const VISITOR_OFFER_STORAGE_KEY = "card-cosmic-visitor-offer-deadline-v1";
 
 type CampaignStatus = "upcoming" | "active" | "ended";
 
@@ -30,6 +32,11 @@ function getCampaignCountdown(now: number, target: number) {
     minutes: Math.floor((remaining % 3_600_000) / 60_000),
     seconds: Math.floor((remaining % 60_000) / 1_000),
   };
+}
+
+function createVisitorOfferDeadline(now: number) {
+  const offerStart = Math.max(now, CAMPAIGN_START_UTC);
+  return Math.min(offerStart + VISITOR_OFFER_DURATION_MS, CAMPAIGN_END_UTC);
 }
 
 function twoDigits(value: number) {
@@ -149,18 +156,55 @@ export default function Home() {
   const [activeShot, setActiveShot] = useState(0);
   const [openFaq, setOpenFaq] = useState<number | null>(0);
   const [campaignNow, setCampaignNow] = useState(() => Date.now());
+  const [visitorOfferDeadline, setVisitorOfferDeadline] = useState(() =>
+    createVisitorOfferDeadline(Date.now()),
+  );
   const downloadRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     track("PageView", "page_view");
+
+    const storedDeadline = Number(
+      window.localStorage.getItem(VISITOR_OFFER_STORAGE_KEY),
+    );
+    const hasValidStoredDeadline =
+      Number.isFinite(storedDeadline) &&
+      storedDeadline >= CAMPAIGN_START_UTC &&
+      storedDeadline <= CAMPAIGN_END_UTC;
+    const deadline = hasValidStoredDeadline
+      ? storedDeadline
+      : createVisitorOfferDeadline(Date.now());
+
+    if (!hasValidStoredDeadline) {
+      window.localStorage.setItem(
+        VISITOR_OFFER_STORAGE_KEY,
+        String(deadline),
+      );
+    }
+    const deadlineSync = window.setTimeout(
+      () => setVisitorOfferDeadline(deadline),
+      0,
+    );
+
     const timer = window.setInterval(() => setCampaignNow(Date.now()), 1_000);
-    return () => window.clearInterval(timer);
+    return () => {
+      window.clearTimeout(deadlineSync);
+      window.clearInterval(timer);
+    };
   }, []);
 
-  const campaignStatus = getCampaignStatus(campaignNow);
+  const globalCampaignStatus = getCampaignStatus(campaignNow);
+  const campaignStatus: CampaignStatus =
+    globalCampaignStatus === "ended" ||
+    (globalCampaignStatus === "active" &&
+      campaignNow >= visitorOfferDeadline)
+      ? "ended"
+      : globalCampaignStatus;
   const campaignCountdown = getCampaignCountdown(
     campaignNow,
-    campaignStatus === "upcoming" ? CAMPAIGN_START_UTC : CAMPAIGN_END_UTC,
+    campaignStatus === "upcoming"
+      ? CAMPAIGN_START_UTC
+      : visitorOfferDeadline,
   );
 
   async function copyCode() {
@@ -210,14 +254,14 @@ export default function Home() {
             ) : (
               <>
                 <div className="campaign-badges">
-                  <span>🔥 Limited Time Offer</span>
-                  <span>🇳🇬 Nigeria New Users Only</span>
+                  <strong>🔥 Limited Time Offer</strong>
+                  <strong>🇳🇬 Nigeria New Users Only</strong>
                 </div>
 
                 <div className="campaign-countdown" aria-live="polite">
                   <span>
                     {campaignStatus === "active"
-                      ? "Campaign Ends In"
+                      ? "Your 24-Hour Offer Ends In"
                       : "Campaign Starts In"}
                   </span>
                   <div className="countdown-units">
@@ -246,12 +290,6 @@ export default function Home() {
                   </h1>
                 </div>
 
-                <p className="campaign-support">
-                  <strong>New to Card Cosmic?</strong> Register your account and
-                  enter invitation number 555555 during the campaign period to
-                  become eligible for the Nigeria new-user welcome benefit.
-                </p>
-
                 <div className="campaign-reward" aria-label="New user benefit ₦3,000">
                   <span>🎁 New User Benefit</span>
                   <strong>₦3,000</strong>
@@ -262,11 +300,6 @@ export default function Home() {
                     <strong>555555</strong>
                     <small>During campaign period</small>
                   </div>
-                </div>
-
-                <div className="campaign-date">
-                  <span>Campaign Period (Nigeria Time)</span>
-                  <strong>August 22 – August 25, 2026</strong>
                 </div>
 
                 <ol

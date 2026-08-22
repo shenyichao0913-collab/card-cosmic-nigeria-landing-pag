@@ -62,8 +62,11 @@ test("removes the disposable starter preview surface", async () => {
   assert.match(page, /Unlock Your ₦3,000 Welcome Benefit/);
   assert.match(page, /Date\.UTC\(2026, 7, 21, 23, 0, 0\)/);
   assert.match(page, /Date\.UTC\(2026, 7, 25, 23, 0, 0\)/);
+  assert.match(page, /VISITOR_OFFER_DURATION_MS = 24 \* 60 \* 60 \* 1_000/);
+  assert.match(page, /localStorage\.getItem\(\s*VISITOR_OFFER_STORAGE_KEY/);
+  assert.match(page, /localStorage\.setItem\(/);
   assert.match(page, /setInterval\(\(\) => setCampaignNow\(Date\.now\(\)\), 1_000\)/);
-  assert.match(page, /Campaign Ends In/);
+  assert.match(page, /Your 24-Hour Offer Ends In/);
   assert.match(page, /campaignCountdown\.seconds/);
   assert.match(page, /The ₦3,000 Welcome Campaign Has Ended/);
   assert.match(page, /id="download"/);
@@ -73,6 +76,8 @@ test("removes the disposable starter preview surface", async () => {
   assert.match(page, /track\("AppDownloadClick", "app_download_click"/);
   assert.match(page, /store: "apple_app_store"/);
   assert.match(page, /store: "google_play"/);
+  assert.doesNotMatch(page, /New to Card Cosmic\?/);
+  assert.doesNotMatch(page, /Campaign Period \(Nigeria Time\)/);
   assert.doesNotMatch(page, /FREE MONEY|MAKE MONEY|EARN MONEY|GET CASH|GUARANTEED PROFIT/i);
   assert.match(styles, /\.benefits-section \.heading-split\s*{\s*grid-template-columns: minmax\(0, 1fr\)/);
   assert.match(layout, /en-NG/);

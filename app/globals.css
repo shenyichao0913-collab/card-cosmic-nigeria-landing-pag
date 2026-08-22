@@ -548,8 +548,7 @@ h1 span {
   grid-template-areas:
     "badges countdown"
     "headline reward"
-    "support reward"
-    "date reward"
+    "steps reward"
     "steps invite"
     "steps download"
     "eligibility eligibility";
@@ -559,21 +558,31 @@ h1 span {
 
 .campaign-badges {
   grid-area: badges;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
+  display: grid;
+  gap: 10px;
+  align-content: start;
 }
 
-.campaign-badges span {
-  padding: 8px 11px;
+.campaign-badges strong {
+  width: fit-content;
+  margin: 0;
+  padding: 10px 14px;
   border: 1px solid rgba(248, 184, 31, 0.38);
-  border-radius: 999px;
-  color: var(--gold-soft);
-  background: rgba(248, 184, 31, 0.1);
+  border-radius: 12px;
+  color: #07111f;
+  background: linear-gradient(135deg, var(--gold-soft), var(--gold));
   text-transform: uppercase;
-  letter-spacing: 0.07em;
-  font-size: 10px;
-  font-weight: 900;
+  letter-spacing: 0.08em;
+  font-size: clamp(14px, 1.45vw, 18px);
+  font-weight: 950;
+  line-height: 1.15;
+  box-shadow: 0 12px 28px rgba(248, 184, 31, 0.18);
+}
+
+.campaign-badges strong:last-child {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.08);
+  box-shadow: none;
 }
 
 .campaign-countdown {
@@ -651,19 +660,6 @@ h1 span {
   letter-spacing: -0.035em;
 }
 
-.campaign-support {
-  grid-area: support;
-  max-width: 660px;
-  margin: 0;
-  color: #bcc9dc;
-  font-size: 15px;
-  line-height: 1.6;
-}
-
-.campaign-support > strong {
-  color: #fff;
-}
-
 .campaign-reward {
   grid-area: reward;
   min-height: 320px;
@@ -727,29 +723,6 @@ h1 span {
   text-transform: uppercase;
   letter-spacing: 0.08em;
   font-size: 8px;
-}
-
-.campaign-date {
-  grid-area: date;
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  padding: 13px 15px;
-  border-left: 3px solid var(--gold);
-  border-radius: 0 13px 13px 0;
-  background: rgba(255, 255, 255, 0.05);
-}
-
-.campaign-date span {
-  color: #91a2ba;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  font-size: 9px;
-  font-weight: 900;
-}
-
-.campaign-date strong {
-  font-size: 14px;
 }
 
 .campaign-steps {
@@ -1821,9 +1794,7 @@ a:focus-visible {
       "badges"
       "countdown"
       "headline"
-      "support"
       "reward"
-      "date"
       "steps"
       "invite"
       "download"
@@ -1931,8 +1902,11 @@ a:focus-visible {
     grid-template-columns: 1fr;
   }
 
-  .campaign-badges span {
-    width: fit-content;
+  .campaign-badges strong {
+    width: 100%;
+    padding: 11px 13px;
+    text-align: center;
+    font-size: 14px;
   }
 
   .campaign-badge {
